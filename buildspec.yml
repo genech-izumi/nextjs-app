@@ -1,20 +1,8 @@
-version: 0.2
-
-phases:
-  install:
-    commands:
-      - npm ci
-
-  build:
-    commands:
-      - npm run build
-
   post_build:
     commands:
       - echo "==== out/ フォルダ確認 ===="
       - ls -la out/
-      
-      # HTMLファイルを /xxx/index.html に移動（index.html, 404.html を除く）
+
       - echo "==== HTMLファイル構成を調整 ===="
       - |
         for file in out/*.html; do
@@ -22,18 +10,16 @@ phases:
           if [ "$name" != "index" ] && [ "$name" != "404" ]; then
             mkdir -p "out/$name"
             mv "$file" "out/$name/index.html"
+            # 元の menu.html を削除（mv で移動済みでも path は有効）
+            rm -f "out/${name}.html"
           fi
         done
 
-        find out/ -maxdepth 1 -type f -name '*.html' ! -name 'index.html' ! -name '404.html' -exec rm {} \;
+      - echo "==== 最終的な out/ の構成 ===="
+      - find out/ -type f
 
       - echo "==== S3バケットの中身確認（一覧）===="
       - aws s3 ls s3://izumi2-backet/
 
       - echo "==== S3へアップロード ===="
       - aws s3 cp out/ s3://izumi2-backet/out/ --recursive
-
-artifacts:
-  files:
-    - '**/*'
-  base-directory: out
