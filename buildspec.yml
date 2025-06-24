@@ -25,7 +25,11 @@ phases:
           fi
         done
 
-        find out/ -maxdepth 1 -type f -name '*.html' ! -name 'index.html' ! -name '404.html' -exec rm {} \;
+        echo "==== 移動後の out フォルダの中身 ===="
+        ls -lR out/
+        echo "==== 余分なhtmlファイルを削除 ===="
+        # これでトップ階層のindex.htmlと404.html以外のhtmlファイルは消す
+        find out/ -maxdepth 1 -type f -name '*.html' ! -name 'index.html' ! -name '404.html' -exec ls -l {} \; -exec rm {} \;
 
       - echo "==== S3バケットの中身確認（一覧）===="
       - aws s3 ls s3://izumi2-backet/
