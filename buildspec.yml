@@ -11,7 +11,7 @@ phases:
 
   post_build:
     commands:
-      - echo "==== ファイル整理 ===="
+      - echo "==== HTML/TXTファイル構成を調整 ===="
       - |
         for file in out/*.html; do
           name=$(basename "$file" .html)
