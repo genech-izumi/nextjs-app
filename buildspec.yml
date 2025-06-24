@@ -15,4 +15,4 @@ phases:
       - echo "==== S3バケットの中身確認（一覧）===="
       - aws s3 ls s3://izumi2-backet/
       - echo "==== S3へアップロード ===="
-      - aws s3 cp out/ s3://izumi2-backet/ --recursive --acl public-read --debug
+      - aws s3 cp out/ s3://izumi2-backet/ --recursive
