@@ -25,6 +25,8 @@ phases:
           fi
         done
 
+        find out/ -maxdepth 1 -type f -name '*.html' ! -name 'index.html' ! -name '404.html' -exec rm {} \;
+
       - echo "==== S3バケットの中身確認（一覧）===="
       - aws s3 ls s3://izumi2-backet/
 
