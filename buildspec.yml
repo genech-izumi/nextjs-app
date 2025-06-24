@@ -29,4 +29,4 @@ phases:
       - aws s3 ls s3://izumi2-backet/
 
       - echo "==== S3へアップロード ===="
-      - aws s3 cp out/ s3://izumi2-backet/ --recursive
+      - aws s3 cp out/ s3://izumi2-backet/out/ --recursive
