@@ -3,18 +3,16 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo Installing dependencies...
       - npm ci
   build:
     commands:
-      - echo Building the project...
       - npm run build
+      - npm run export
   post_build:
     commands:
-      - echo Build completed. Uploading to S3...
-      # S3にoutフォルダの中身をアップロード（例: バケットのルート直下に配置）
-      - aws s3 cp out/ s3://izumi2-backet/ --recursive --acl public-read
-      - echo Upload complete.
-artifacts:
-  files:
-    - '**/*'
+      - echo "==== out/ フォルダ確認 ===="
+      - ls -la out/
+      - echo "==== S3バケットの中身確認（一覧）===="
+      - aws s3 ls s3://izumi2-backet/
+      - echo "==== S3へアップロード ===="
+      - aws s3 cp out/ s3://izumi2-backet/ --recursive --acl public-read --debug
