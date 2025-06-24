@@ -32,3 +32,8 @@ phases:
 
       - echo "==== S3へアップロード ===="
       - aws s3 cp out/ s3://izumi2-backet/out/ --recursive
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: out
